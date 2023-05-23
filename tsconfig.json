@@ -10,7 +10,9 @@
       "@storage/*": ["./src/storage/*"],
       "@theme/*": ["./src/theme/*"],
       "@utils/*": ["./src/utils/*"],
-      "@contexts/*": ["./src/contexts/*"]
+      "@contexts/*": ["./src/contexts/*"],
+      "@libs/*": ["./src/libs/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   }
 }

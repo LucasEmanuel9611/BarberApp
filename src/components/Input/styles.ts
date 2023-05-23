@@ -13,7 +13,7 @@ export const Container = styled.View<ContainerProps>`
   padding: 0 16px;
   background: ${({ theme }) => theme.COLORS.GRAY_500};
   border-radius: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   border-width: 2px;
   border-color: ${({ theme }) => theme.COLORS.GRAY_500};
 
@@ -23,7 +23,7 @@ export const Container = styled.View<ContainerProps>`
   ${(props) =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: ;
     `}
 
   ${(props) =>
@@ -41,4 +41,10 @@ export const CustomInput = styled(TextInput)`
   flex: 1%;
   color: #fff;
   font-size: 16px;
+`;
+
+export const ErrorMessage = styled.Text`
+  color: ${({ theme }) => theme.COLORS.RED};
+  width: 100%;
+  margin: 0 0 5px 10px;
 `;

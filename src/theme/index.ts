@@ -13,6 +13,8 @@ export default {
     GRAY_300: "#666360",
     GRAY_200: "#C4C4CC",
     GRAY_100: "#f4ede8",
+
+    RED: "#c53030",
   },
   FONT_SIZE: {
     SM: 14,

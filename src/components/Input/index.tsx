@@ -7,26 +7,31 @@ type InputProps = TextInputProps & {
     name: string;
     icon: string;
     isErrored: boolean;
+    errorMessage?: string;
 }
 
-export function Input({ icon, name, isErrored = false, ...rest }: InputProps) {
+export function Input({ icon, name, errorMessage, isErrored = false, ...rest }: InputProps) {
     const { COLORS } = useTheme();
     const [isFocused, setIsFocused] = useState(false);
 
     return (
-        <Styled.Container isFocused={isFocused} isErrored={isErrored}>
-            <Styled.Icon
-                name={icon}
-                size={20}
-                color={isFocused ? COLORS.ORANGE_100 : COLORS.GRAY_300}
-            />
+        <>
 
-            <Styled.CustomInput
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                placeholderTextColor={COLORS.GRAY_300}
-                {...rest}
-            />
-        </Styled.Container>
+            <Styled.Container isFocused={isFocused} isErrored={isErrored}>
+                <Styled.Icon
+                    name={icon}
+                    size={20}
+                    color={isFocused ? COLORS.ORANGE_100 : COLORS.GRAY_300}
+                />
+
+                <Styled.CustomInput
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    placeholderTextColor={COLORS.GRAY_300}
+                    {...rest}
+                />
+            </Styled.Container>
+            {errorMessage && <Styled.ErrorMessage>{errorMessage}</Styled.ErrorMessage>}
+        </>
     )
 }
