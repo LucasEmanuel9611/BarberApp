@@ -1,8 +1,8 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 export type AuthContextDataProps = {
     isAuthenticated: boolean;
-    setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+    handleSetAuthenticated: (value: boolean) => void
 }
 
 type AuthContextProviderProps = {
@@ -15,10 +15,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+    const handleSetAuthenticated = (value: boolean) => {
+        setIsAuthenticated(value);
+    };
+
     return (
         <AuthContext.Provider value={{
             isAuthenticated,
-            setIsAuthenticated
+            handleSetAuthenticated
         }}>
             {children}
         </AuthContext.Provider>

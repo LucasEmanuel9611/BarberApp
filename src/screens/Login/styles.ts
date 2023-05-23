@@ -31,7 +31,6 @@ export const ForgotPasswordText = styled.Text`
 export const CreateAccountButton = styled.TouchableOpacity`
   padding: 16px 0 16px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_400};
-
   justify-content: center;
   align-items: center;
   flex-direction: row;

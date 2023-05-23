@@ -1,9 +1,9 @@
 import React from 'react';
-import { RectButtonProperties } from 'react-native-gesture-handler';
+import { TouchableOpacityProps } from 'react-native';
 
 import { ButtonText, Container } from './styles';
 
-interface ButtonProps extends RectButtonProperties {
+interface ButtonProps extends TouchableOpacityProps {
     children: string;
 }
 
@@ -12,5 +12,4 @@ const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
         <ButtonText>{children}</ButtonText>
     </Container>
 );
-
 export default Button;

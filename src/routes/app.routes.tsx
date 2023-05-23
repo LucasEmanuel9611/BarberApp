@@ -2,8 +2,8 @@ import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-naviga
 
 import { Entypo } from '@expo/vector-icons';
 
-import { Home } from '@screens/Home';
 import { Schedule } from '@screens/Schedule';
+import { UserHome } from '@screens/UserHome';
 
 type AppRoutes = {
     home: undefined;
@@ -30,10 +30,9 @@ export function AppRoutes() {
         }}>
             <Screen
                 name='home'
-                component={Home}
+                component={UserHome}
                 options={{
                     tabBarIcon: () => <Entypo name="home" size={24} color="white" />
-
                 }}
             />
 
