@@ -8,7 +8,7 @@ interface ButtonProps extends TouchableOpacityProps {
     isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, isLoading, ...rest }) => {
+const Button = ({ children, isLoading, ...rest }: ButtonProps) => {
     return isLoading ?
         <Container>
             <ButtonText>Carregando...</ButtonText>

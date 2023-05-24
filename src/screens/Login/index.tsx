@@ -2,14 +2,13 @@ import Button from '@components/Button';
 import { Input } from '@components/Input';
 import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from '@hooks/useAuth';
 import { api } from '@libs/axios';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useToast } from 'react-native-toast-notifications';
-import { useAuth } from 'src/hooks/useAuth';
 import { z } from 'zod';
 import * as Styled from "./styles";
-
 
 const userSchema = z.object({
     email: z.string().email('Insira um e-mail válido').nonempty({ message: 'Preencha o email' }),
@@ -34,7 +33,7 @@ export const Login = () => {
                 handleSetAuthenticated(true)
             })
             .catch((error) => {
-                toast.show("Erro" + error.message, {
+                toast.show("Erro " + error.message, {
                     type: "danger",
                     placement: "top",
                     duration: 4000,
@@ -42,7 +41,6 @@ export const Login = () => {
                 });
             })
     }
-
 
     return (
         <>
@@ -77,7 +75,6 @@ export const Login = () => {
                                 />
                             )}
                         />
-
                         <Controller
                             control={control}
                             name="password"
@@ -96,7 +93,6 @@ export const Login = () => {
                                 />
                             )}
                         />
-
                         <Button onPress={handleSubmit(onSubmit)}>
                             Entrar
                         </Button>

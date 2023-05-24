@@ -1,4 +1,4 @@
-import { NavigationContainer, } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { View } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import { AppRoutes } from "./app.routes";
@@ -12,7 +12,7 @@ export function Routes() {
         <View style={{ flex: 1, backgroundColor: '#202024' }}>
             <NavigationContainer>
                 {
-                    isAuthenticated ? <AppRoutes /> : <AuthRoutes />
+                    !isAuthenticated ? <AppRoutes /> : <AuthRoutes />
                 }
             </NavigationContainer>
         </View>

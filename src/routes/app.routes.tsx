@@ -1,8 +1,4 @@
-import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { Entypo } from '@expo/vector-icons';
-
-import { Schedule } from '@screens/Schedule';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { UserHome } from '@screens/UserHome';
 
 type AppRoutes = {
@@ -10,40 +6,17 @@ type AppRoutes = {
     schedule: undefined;
 }
 
-export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
+export type AppNavigatorRoutesProps = NativeStackNavigationProp<AppRoutes>;
 
-const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>();
+const { Navigator, Screen } = createNativeStackNavigator<AppRoutes>();
 
 export function AppRoutes() {
 
     return (
-        <Navigator screenOptions={{
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarStyle: {
-                backgroundColor: 'black',
-                borderTopWidth: 0,
-                paddingBottom: 10,
-                paddingTop: 10,
-                height: 60
-            },
-        }}>
+        <Navigator screenOptions={{ headerShown: false }}>
             <Screen
                 name='home'
                 component={UserHome}
-                options={{
-                    tabBarIcon: () => <Entypo name="home" size={24} color="white" />
-                }}
-            />
-
-            <Screen
-                name='schedule'
-                component={Schedule}
-                options={{
-                    tabBarIcon: () => (
-                        <Entypo name="clock" size={24} color="white" />
-                    )
-                }}
             />
         </Navigator>
     );
