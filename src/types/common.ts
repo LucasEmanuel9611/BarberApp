@@ -4,14 +4,4 @@ export type SchedulingProps = {
   status: ScheduleStatusTextProps;
   createdAt: Date;
 };
-
-type UserDates = {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  isAdmin: string;
-  createdAt: Date;
-};
-
 export type ScheduleStatusTextProps = "APROVADO" | "REPROVADO" | "AGUARDANDO";

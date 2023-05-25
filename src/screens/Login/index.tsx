@@ -2,12 +2,12 @@ import Button from '@components/Button';
 import { Input } from '@components/Input';
 import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '@hooks/useAuth';
-import { api } from '@libs/axios';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useToast } from 'react-native-toast-notifications';
 import { z } from 'zod';
+import { loginThunk } from '../../store/modules/auth/thunk';
 import * as Styled from "./styles";
 
 const userSchema = z.object({
@@ -18,28 +18,27 @@ const userSchema = z.object({
 type userFormData = z.infer<typeof userSchema>
 
 export const Login = () => {
-    const { handleSetAuthenticated } = useAuth()
 
     const { control, handleSubmit, formState: { errors } } = useForm<userFormData>({
         resolver: zodResolver(userSchema)
     })
 
     const toast = useToast();
+    const dispatch = useAppDispatch();
 
     const onSubmit = ({ email, password }: userFormData) => {
-        api.post("/sessions", { email, password })
-            .then(() => {
-                handleSetAuthenticated(true)
-            })
-            .catch((error) => {
-                const errorMessage = error.response.data.message ?? "ao fazer login tente novamente"
-                toast.show(`Erro ${errorMessage.toLowerCase()} `, {
-                    type: "danger",
-                    placement: "top",
-                    duration: 4000,
-                    animationType: "slide-in",
-                });
-            })
+        dispatch(
+            loginThunk({ email, password }, {
+                onError: err => {
+                    const errorMessage = err.response.data.message ?? "ao fazer login tente novamente"
+                    toast.show(`Erro ${errorMessage.toLowerCase()} `, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 4000,
+                        animationType: "slide-in",
+                    });
+                }
+            }))
     }
 
     return (
