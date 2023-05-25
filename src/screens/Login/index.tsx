@@ -27,13 +27,13 @@ export const Login = () => {
     const toast = useToast();
 
     const onSubmit = ({ email, password }: userFormData) => {
-
         api.post("/sessions", { email, password })
             .then(() => {
                 handleSetAuthenticated(true)
             })
             .catch((error) => {
-                toast.show("Erro " + error.message, {
+                const errorMessage = error.response.data.message ?? "ao fazer login tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()} `, {
                     type: "danger",
                     placement: "top",
                     duration: 4000,

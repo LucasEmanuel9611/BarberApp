@@ -12,7 +12,7 @@ export function Routes() {
         <View style={{ flex: 1, backgroundColor: '#202024' }}>
             <NavigationContainer>
                 {
-                    !isAuthenticated ? <AppRoutes /> : <AuthRoutes />
+                    isAuthenticated ? <AppRoutes /> : <AuthRoutes />
                 }
             </NavigationContainer>
         </View>
