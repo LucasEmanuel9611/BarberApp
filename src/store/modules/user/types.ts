@@ -7,3 +7,9 @@ export type UserDates = {
     id: string;
   };
 };
+
+export type CreateUserPayload = {
+  username: string;
+  email: string;
+  password: string;
+};
