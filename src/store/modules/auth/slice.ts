@@ -3,7 +3,6 @@ import { AuthState } from "./types";
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  authError: false,
 } as const;
 
 export const authSlice = createSlice({
@@ -12,6 +11,9 @@ export const authSlice = createSlice({
   reducers: {
     _onLoginSuccess: (state) => {
       state.isAuthenticated = true;
+    },
+    clearAuthData() {
+      return initialState;
     },
   },
 });
