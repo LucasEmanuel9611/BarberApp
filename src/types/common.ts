@@ -1,7 +1,10 @@
-export type SchedulingProps = {
+export type ScheduleProps = {
   id: number;
-  user_id: number;
+  user_id: string;
+  username: string;
   status: ScheduleStatusTextProps;
-  createdAt: Date;
+  date: Date;
+  created_at: Date;
 };
+
 export type ScheduleStatusTextProps = "APROVADO" | "REPROVADO" | "AGUARDANDO";

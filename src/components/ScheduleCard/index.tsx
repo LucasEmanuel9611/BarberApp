@@ -1,21 +1,21 @@
 import { ScheduleStatus } from "@components/StatusText"
 import dayjs from "dayjs"
-import { SchedulingProps } from "src/types/common"
+import { ScheduleProps } from "src/types/common"
 import * as Styled from "./styles"
 
-type ScheduleCardProps = SchedulingProps
+type ScheduleCardProps = ScheduleProps
 
-export const ScheduleCard = ({ createdAt, status }: ScheduleCardProps) => {
+export const ScheduleCard = ({ created_at, status }: ScheduleCardProps) => {
     return (
         <Styled.Container>
             <Styled.StatusSideContainer>
                 <ScheduleStatus status={status} >
-                    {status.toLowerCase()}
+                    {status?.toLowerCase()}
                 </ScheduleStatus>
             </Styled.StatusSideContainer>
             <Styled.DateContainer>
-                <Styled.DateText>{dayjs(createdAt).format("D/MM/YYYY")} </Styled.DateText>
-                <Styled.DateText>{dayjs(createdAt).format("HH:mm")} </Styled.DateText>
+                <Styled.DateText>{dayjs(created_at).format("D/MM/YYYY")} </Styled.DateText>
+                <Styled.DateText>{dayjs(created_at).format("HH:mm")} </Styled.DateText>
             </Styled.DateContainer>
         </Styled.Container>
     )

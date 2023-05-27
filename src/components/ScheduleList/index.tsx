@@ -1,9 +1,9 @@
 import { ScheduleCard } from '@components/ScheduleCard';
-import { SchedulingProps } from 'src/types/common';
+import { ScheduleProps } from 'src/types/common';
 import * as Styled from './styles';
 
 type ScheduleListProps = {
-    schedules?: SchedulingProps[] | undefined
+    schedules?: ScheduleProps[] | undefined
 }
 
 export const ScheduleList = ({ schedules }: ScheduleListProps) => {
