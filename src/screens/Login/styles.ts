@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 export const Container = styled.View`
   flex: 1;
   align-items: center;
+  gap: 8px;
   justify-content: center;
   padding: 0 30px 150px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_400};

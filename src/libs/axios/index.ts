@@ -1,3 +1,4 @@
+import { API_URL } from "@env";
 import { store } from "@store/index";
 import { authActions } from "@store/modules/auth/slice";
 import { userActions } from "@store/modules/user/slice";
@@ -8,7 +9,7 @@ import axios, {
 } from "axios";
 
 const apiConfig = {
-  baseURL: "https://4ae7-167-250-18-85.ngrok-free.app",
+  baseURL: API_URL,
 };
 
 const api = axios.create(apiConfig);
@@ -18,7 +19,6 @@ api.interceptors.request.use(
     const token = store.getState().user.token;
 
     if (token !== "") {
-      console.log("token", token);
       config.headers.Authorization = `Bearer ${token}`;
     }
 

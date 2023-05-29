@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   background: ${({ theme }) => theme.COLORS.GRAY_300};
   border-radius: 10px;
   flex-direction: row;

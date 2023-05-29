@@ -24,7 +24,7 @@ export const Signup = () => {
 
     const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<userFormData>({
+    const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<userFormData>({
         resolver: zodResolver(userSchema),
         defaultValues: {
             email: '',
@@ -118,7 +118,7 @@ export const Signup = () => {
                                 />
                             )}
                         />
-                        <Button onPress={handleSubmit(onSubmit)}>
+                        <Button onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
                             Cadastrar-se
                         </Button>
                     </Styled.Container>

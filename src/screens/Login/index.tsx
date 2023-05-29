@@ -22,7 +22,7 @@ type userFormData = z.infer<typeof userSchema>
 export const Login = () => {
     const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<userFormData>({
+    const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<userFormData>({
         resolver: zodResolver(userSchema),
         defaultValues: {
             email: '',
@@ -97,7 +97,7 @@ export const Login = () => {
                                 />
                             )}
                         />
-                        <Button onPress={handleSubmit(onSubmit)}>
+                        <Button onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
                             Entrar
                         </Button>
                     </Styled.Container>
