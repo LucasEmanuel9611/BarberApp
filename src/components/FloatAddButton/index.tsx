@@ -3,7 +3,7 @@ import { TouchableOpacityProps } from "react-native";
 import { useTheme } from "styled-components";
 import * as Styled from "./styles";
 
-export const AddButton = (rest: TouchableOpacityProps) => {
+export const FloatAddButton = (rest: TouchableOpacityProps) => {
     const { COLORS } = useTheme();
     return (
         <Styled.CustomButton {...rest}>

@@ -10,7 +10,7 @@ export const ScheduleList = ({ schedules }: ScheduleListProps) => {
     return (
         <>
             {
-                schedules ?
+                schedules && schedules.length > 1 ?
                     <Styled.CardArea>
                         {schedules?.map((schedule) => (
                             <ScheduleCard {...schedule} key={schedule.id} />

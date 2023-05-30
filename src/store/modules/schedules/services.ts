@@ -10,3 +10,7 @@ export const postCreateSchedule = async (
 export const getUserSchedules = async (): Promise<ScheduleData[]> => {
   return api.get("/schedules/user/list").then((response) => response.data);
 };
+
+export const getSchedules = async (): Promise<ScheduleData[]> => {
+  return api.get("/schedules/list").then((response) => response.data);
+};

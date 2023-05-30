@@ -2,22 +2,21 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import { CreateSchedule } from '@screens/CreateSchedule';
 import { UserHome } from '@screens/UserHome';
 
-type AppRoutes = {
-    home: undefined;
+type UserRoutes = {
+    userHome: undefined;
     schedule: undefined;
     createSchedule: undefined;
 }
 
-export type AppNavigatorRoutesProps = NativeStackNavigationProp<AppRoutes>;
+export type UserNavigatorRoutesProps = NativeStackNavigationProp<UserRoutes>;
 
-const { Navigator, Screen } = createNativeStackNavigator<AppRoutes>();
+const { Navigator, Screen } = createNativeStackNavigator<UserRoutes>();
 
-export function AppRoutes() {
-
+export function UserRoutes() {
     return (
         <Navigator screenOptions={{ headerShown: false }}>
             <Screen
-                name='home'
+                name='userHome'
                 component={UserHome}
             />
             <Screen

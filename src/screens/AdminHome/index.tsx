@@ -1,31 +1,24 @@
 
-import { FloatAddButton } from "@components/FloatAddButton";
 import { ScheduleList } from "@components/ScheduleList";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { useAppSelector } from "@hooks/useAppSelector";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { UserNavigatorRoutesProps } from "@routes/user.routes";
-import { getUserSchedulesThunk } from "@store/modules/schedules/thunk";
+import { useFocusEffect } from "@react-navigation/native";
+import { getSchedulesThunk } from "@store/modules/schedules/thunk";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
 
-export const UserHome = () => {
+export const AdminHome = () => {
     const { user } = useAppSelector(state => state.user);
     const toast = useToast();
     const appDispatch = useAppDispatch();
     const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
-    const navigation = useNavigation<UserNavigatorRoutesProps>();
-
-    const handleCreateSchedulePage = () => {
-        navigation.navigate("createSchedule")
-    }
 
     useFocusEffect(
         useCallback(() => {
-            appDispatch(getUserSchedulesThunk({
+            appDispatch(getSchedulesThunk({
                 onSuccess: (data) => {
                     setSchedules(data)
                 },
@@ -55,7 +48,6 @@ export const UserHome = () => {
                 </Styled.UserContent>
                 <ScheduleList schedules={schedules} />
             </ScrollView>
-            <FloatAddButton onPress={handleCreateSchedulePage} />
         </Styled.Container >
     )
 }
