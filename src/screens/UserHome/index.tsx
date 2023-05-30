@@ -30,7 +30,7 @@ export const UserHome = () => {
                     setSchedules(data)
                 },
                 onError: (error) => {
-                    const errorMessage = error.response.data.message ?? "ao criar agendamento tente novamente"
+                    const errorMessage = error.response.data.message ?? "tente novamente"
                     toast.show(`Erro ${errorMessage.toLowerCase()}`, {
                         type: "danger",
                         placement: "top",
