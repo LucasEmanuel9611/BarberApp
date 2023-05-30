@@ -4,16 +4,17 @@ import * as Styled from './styles';
 
 type ScheduleListProps = {
     schedules?: ScheduleProps[] | undefined
+    showUserName?: boolean
 }
 
-export const ScheduleList = ({ schedules }: ScheduleListProps) => {
+export const ScheduleList = ({ schedules, showUserName }: ScheduleListProps) => {
     return (
         <>
             {
-                schedules && schedules.length > 1 ?
+                schedules && schedules.length > 0 ?
                     <Styled.CardArea>
                         {schedules?.map((schedule) => (
-                            <ScheduleCard {...schedule} key={schedule.id} />
+                            <ScheduleCard {...schedule} key={schedule.id} showUserName={showUserName} />
                         ))}
                     </Styled.CardArea>
                     :

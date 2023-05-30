@@ -4,10 +4,9 @@ import * as Styled from "./styles";
 
 type ScheduleStatusProps = {
     status: ScheduleStatusTextProps
-    children: any
 }
 
-export const ScheduleStatus = ({ children, status }: ScheduleStatusProps) => {
+export const ScheduleStatus = ({ status }: ScheduleStatusProps) => {
     const { COLORS } = useTheme();
 
     const textColor = (status: string) => {
@@ -22,7 +21,7 @@ export const ScheduleStatus = ({ children, status }: ScheduleStatusProps) => {
 
     return (
         <Styled.CustomText color={textColor(status)} >
-            {children}
+            {status}
         </Styled.CustomText>
     )
 }

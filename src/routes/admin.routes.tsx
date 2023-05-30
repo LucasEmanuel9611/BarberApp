@@ -2,9 +2,11 @@ import { Entypo } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AdminHome } from '@screens/AdminHome';
+import { AdminSchedules } from '@screens/AdminSchedules';
 
 type AdminRoutes = {
     adminHome: undefined;
+    adminSchedules: undefined;
 }
 
 export type AdminNavigatorRoutesProps = NativeStackNavigationProp<AdminRoutes>;
@@ -31,6 +33,14 @@ export function AdminRoutes() {
                 component={AdminHome}
                 options={{
                     tabBarIcon: () => <Entypo name="home" size={24} color="white" />
+
+                }}
+            />
+            <Screen
+                name='adminSchedules'
+                component={AdminSchedules}
+                options={{
+                    tabBarIcon: () => <Entypo name="clock" size={24} color="white" />
 
                 }}
             />
