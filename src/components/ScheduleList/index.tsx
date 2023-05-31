@@ -5,9 +5,10 @@ import * as Styled from './styles';
 type ScheduleListProps = {
     schedules?: ScheduleProps[] | undefined
     showUserName?: boolean
+    emptyArrayMessage: string
 }
 
-export const ScheduleList = ({ schedules, showUserName }: ScheduleListProps) => {
+export const ScheduleList = ({ schedules, showUserName, emptyArrayMessage }: ScheduleListProps) => {
     return (
         <>
             {
@@ -19,7 +20,7 @@ export const ScheduleList = ({ schedules, showUserName }: ScheduleListProps) => 
                     </Styled.CardArea>
                     :
                     <Styled.Container>
-                        <Styled.TreatmentText> Não há agendamentos </Styled.TreatmentText>
+                        <Styled.TreatmentText> {emptyArrayMessage} </Styled.TreatmentText>
                     </Styled.Container>
             }
         </>

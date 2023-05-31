@@ -106,8 +106,10 @@ export const AdminHome = () => {
                             <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
                         </Styled.CardSideContainer>
                     </Styled.InfoCard>
-
-                    <ScheduleList schedules={schedulesToday} showUserName />
+                    <ScheduleList
+                        schedules={schedulesToday}
+                        showUserName
+                        emptyArrayMessage="não há agendamentos para hoje" />
                     <View style={{ height: 40 }} />
                 </ScrollView>
             </Styled.Content>

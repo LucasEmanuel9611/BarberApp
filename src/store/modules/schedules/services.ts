@@ -18,5 +18,7 @@ export const getSchedules = async (): Promise<ScheduleData[]> => {
 export const getSchedulesByDay = async (
   date: SchedulePayload
 ): Promise<ScheduleData[]> => {
-  return api.get("/schedules/list/day", date).then((response) => response.data);
+  return api
+    .get("/schedules/list/day", { params: date })
+    .then((response) => response.data);
 };

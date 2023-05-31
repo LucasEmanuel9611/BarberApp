@@ -48,8 +48,11 @@ export const AdminSchedules = () => {
                 />
             </Styled.UserContent>
             <Styled.Content>
-                <ScrollView >
-                    <ScheduleList schedules={schedules} showUserName />
+                <ScrollView>
+                    <ScheduleList
+                        schedules={schedules}
+                        showUserName
+                        emptyArrayMessage="não há agendamentos" />
                     <View style={{ height: 40 }} />
                 </ScrollView>
             </Styled.Content>
