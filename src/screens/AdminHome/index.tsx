@@ -1,10 +1,10 @@
 
+import { AdminLayout } from "@components/Layout/AdminLayout";
 import { ScheduleList } from "@components/ScheduleList";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { useAppSelector } from "@hooks/useAppSelector";
 import { useFocusEffect } from "@react-navigation/native";
 import { getSchedulesByDayThunk, getSchedulesThunk } from "@store/modules/schedules/thunk";
-import { StatusBar } from "expo-status-bar";
 import { useCallback, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
@@ -74,50 +74,38 @@ export const AdminHome = () => {
         }, [refreshing]))
 
     return (
-        <Styled.Container>
-            <StatusBar style="dark" />
-            <Styled.UserContent>
-                <Styled.UserNameContainer>
-                    <Styled.WelcomeText>Bem vindo, </Styled.WelcomeText>
-                    <Styled.UserName>{user.name} </Styled.UserName>
-                </Styled.UserNameContainer>
-                <Styled.UserAvatar
-                    source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
-                />
-            </Styled.UserContent>
-            <Styled.Content>
-                <Styled.InfoCard >
-                    <Styled.CardSideContainer>
-                        <Styled.CardTitle>Agendamentos</Styled.CardTitle>
-                    </Styled.CardSideContainer>
-                    <Styled.CardSideContainer>
-                        <Styled.TextInfo>{schedules.length}</Styled.TextInfo>
-                    </Styled.CardSideContainer>
-                </Styled.InfoCard>
-                <Styled.InfoCard >
-                    <Styled.CardSideContainer>
-                        <Styled.CardTitle>Agendamentos hoje {dayjs().format('DD/MM')}</Styled.CardTitle>
-                    </Styled.CardSideContainer>
-                    <Styled.CardSideContainer>
-                        <Styled.TextInfo>{schedulesToday.length}</Styled.TextInfo>
-                    </Styled.CardSideContainer>
-                </Styled.InfoCard>
-                <Styled.InfoCard >
-                    <Styled.CardSideContainer>
-                        <Styled.CardTitle>Agendamentos amanhã {dayjs().add(1, 'day').format('DD/MM')}</Styled.CardTitle>
-                    </Styled.CardSideContainer>
-                    <Styled.CardSideContainer>
-                        <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
-                    </Styled.CardSideContainer>
-                </Styled.InfoCard>
-                <ScheduleList
-                    schedules={schedulesToday}
-                    showUserName
-                    emptyArrayMessage="não há agendamentos para hoje"
-                    refreshing={refreshing}
-                    onRefresh={() => setRefreshing(true)}
-                />
-            </Styled.Content>
-        </Styled.Container >
+        <AdminLayout username={user.name}>
+            <Styled.InfoCard >
+                <Styled.CardSideContainer>
+                    <Styled.CardTitle>Agendamentos</Styled.CardTitle>
+                </Styled.CardSideContainer>
+                <Styled.CardSideContainer>
+                    <Styled.TextInfo>{schedules.length}</Styled.TextInfo>
+                </Styled.CardSideContainer>
+            </Styled.InfoCard>
+            <Styled.InfoCard >
+                <Styled.CardSideContainer>
+                    <Styled.CardTitle>Agendamentos hoje {dayjs().format('DD/MM')}</Styled.CardTitle>
+                </Styled.CardSideContainer>
+                <Styled.CardSideContainer>
+                    <Styled.TextInfo>{schedulesToday.length}</Styled.TextInfo>
+                </Styled.CardSideContainer>
+            </Styled.InfoCard>
+            <Styled.InfoCard >
+                <Styled.CardSideContainer>
+                    <Styled.CardTitle>Agendamentos amanhã {dayjs().add(1, 'day').format('DD/MM')}</Styled.CardTitle>
+                </Styled.CardSideContainer>
+                <Styled.CardSideContainer>
+                    <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
+                </Styled.CardSideContainer>
+            </Styled.InfoCard>
+            <ScheduleList
+                schedules={schedulesToday}
+                showUserName
+                emptyArrayMessage="não há agendamentos para hoje"
+                refreshing={refreshing}
+                onRefresh={() => setRefreshing(true)}
+            />
+        </AdminLayout>
     )
 }
