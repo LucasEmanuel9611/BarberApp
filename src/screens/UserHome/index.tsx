@@ -17,6 +17,7 @@ export const UserHome = () => {
     const toast = useToast();
     const appDispatch = useAppDispatch();
     const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
     const navigation = useNavigation<UserNavigatorRoutesProps>();
 
     const handleCreateSchedulePage = () => {
@@ -53,7 +54,12 @@ export const UserHome = () => {
                         source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
                     />
                 </Styled.UserContent>
-                <ScheduleList schedules={schedules} />
+                <ScheduleList
+                    schedules={schedules}
+                    emptyArrayMessage="Você não possui agendamentos"
+                    refreshing={refreshing}
+                    onRefresh={() => setRefreshing(true)}
+                />
             </ScrollView>
             <FloatAddButton onPress={handleCreateSchedulePage} />
         </Styled.Container >

@@ -6,7 +6,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getSchedulesThunk } from "@store/modules/schedules/thunk";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useState } from "react";
-import { ScrollView, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
@@ -16,12 +15,14 @@ export const AdminSchedules = () => {
     const toast = useToast();
     const appDispatch = useAppDispatch();
     const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
     useFocusEffect(
         useCallback(() => {
             appDispatch(getSchedulesThunk({
                 onSuccess: (data) => {
                     setSchedules(data)
+                    setRefreshing(false)
                 },
                 onError: (error) => {
                     const errorMessage = error.response.data.message ?? "tente novamente"
@@ -33,7 +34,7 @@ export const AdminSchedules = () => {
                     });
                 }
             }))
-        }, []))
+        }, [refreshing]))
 
     return (
         <Styled.Container>
@@ -48,13 +49,14 @@ export const AdminSchedules = () => {
                 />
             </Styled.UserContent>
             <Styled.Content>
-                <ScrollView>
-                    <ScheduleList
-                        schedules={schedules}
-                        showUserName
-                        emptyArrayMessage="não há agendamentos" />
-                    <View style={{ height: 40 }} />
-                </ScrollView>
+                <ScheduleList
+                    schedules={schedules}
+                    showUserName
+                    emptyArrayMessage="não há agendamentos"
+                    refreshing={refreshing}
+                    onRefresh={() => setRefreshing(true)}
+                />
+
             </Styled.Content>
         </Styled.Container >
     )

@@ -4,6 +4,8 @@ import {
   getSchedules,
   getSchedulesByDay,
   getUserSchedules,
+  patchApproveSchedule,
+  patchReproveSchedule,
   postCreateSchedule,
 } from "./services";
 import { ScheduleData, SchedulePayload } from "./types";
@@ -46,12 +48,40 @@ export const getSchedulesThunk =
 
 export const getSchedulesByDayThunk =
   (
-    date: SchedulePayload,
+    date: string,
     { onSuccess, onError }: ThunkOptions<ScheduleData[], any>
   ): AppThunk =>
   async () => {
     try {
       const data = await getSchedulesByDay(date);
+      onSuccess && onSuccess(data);
+    } catch (error) {
+      onError && onError(error);
+    }
+  };
+
+export const patchApproveScheduleThunk =
+  (
+    id: string,
+    { onSuccess, onError }: ThunkOptions<ScheduleData, any>
+  ): AppThunk =>
+  async () => {
+    try {
+      const data = await patchApproveSchedule(id);
+      onSuccess && onSuccess(data);
+    } catch (error) {
+      onError && onError(error);
+    }
+  };
+
+export const patchReproveScheduleThunk =
+  (
+    id: string,
+    { onSuccess, onError }: ThunkOptions<ScheduleData, any>
+  ): AppThunk =>
+  async () => {
+    try {
+      const data = await patchReproveSchedule(id);
       onSuccess && onSuccess(data);
     } catch (error) {
       onError && onError(error);

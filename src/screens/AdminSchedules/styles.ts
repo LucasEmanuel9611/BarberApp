@@ -45,7 +45,6 @@ export const Content = styled.View`
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   padding: 25px 10px 0px;
-  gap: 8px;
 `;
 
 export const InfoCard = styled.View`

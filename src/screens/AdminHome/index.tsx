@@ -6,7 +6,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getSchedulesByDayThunk, getSchedulesThunk } from "@store/modules/schedules/thunk";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useState } from "react";
-import { ScrollView, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import dayjs from "../../libs/dayjs.config";
@@ -19,12 +18,14 @@ export const AdminHome = () => {
     const [schedulesToday, setSchedulesToday] = useState<ScheduleProps[]>([]);
     const [schedulesTomorrow, setSchedulesTomorrow] = useState<ScheduleProps[]>([]);
     const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
     useFocusEffect(
         useCallback(() => {
-            const dateNow = dayjs().toDate()
-            const dateTomorrow = dayjs().add(1, "day").toDate()
-            appDispatch(getSchedulesByDayThunk({ date: dateNow }, {
+            const dateNow = dayjs().utc().local().format()
+            const dateTomorrow = dayjs().add(1, "day").utc().local().format()
+
+            appDispatch(getSchedulesByDayThunk(dateNow, {
                 onSuccess: (data) => {
                     setSchedulesToday(data)
                 },
@@ -38,7 +39,8 @@ export const AdminHome = () => {
                     });
                 }
             }))
-            appDispatch(getSchedulesByDayThunk({ date: dateTomorrow }, {
+
+            appDispatch(getSchedulesByDayThunk(dateTomorrow, {
                 onSuccess: (data) => {
                     setSchedulesTomorrow(data)
                 },
@@ -52,6 +54,7 @@ export const AdminHome = () => {
                     });
                 }
             }))
+
             appDispatch(getSchedulesThunk({
                 onSuccess: (data) => {
                     setSchedules(data)
@@ -66,7 +69,9 @@ export const AdminHome = () => {
                     });
                 }
             }))
-        }, []))
+
+            setRefreshing(false)
+        }, [refreshing]))
 
     return (
         <Styled.Container>
@@ -81,37 +86,37 @@ export const AdminHome = () => {
                 />
             </Styled.UserContent>
             <Styled.Content>
-                <ScrollView style={{ marginBottom: 0 }}>
-                    <Styled.InfoCard >
-                        <Styled.CardSideContainer>
-                            <Styled.CardTitle>Agendamentos</Styled.CardTitle>
-                        </Styled.CardSideContainer>
-                        <Styled.CardSideContainer>
-                            <Styled.TextInfo>2{schedulesTomorrow.length}</Styled.TextInfo>
-                        </Styled.CardSideContainer>
-                    </Styled.InfoCard>
-                    <Styled.InfoCard >
-                        <Styled.CardSideContainer>
-                            <Styled.CardTitle>Agendamentos hoje {dayjs().format('DD/MM')}</Styled.CardTitle>
-                        </Styled.CardSideContainer>
-                        <Styled.CardSideContainer>
-                            <Styled.TextInfo>{schedules.length}</Styled.TextInfo>
-                        </Styled.CardSideContainer>
-                    </Styled.InfoCard>
-                    <Styled.InfoCard >
-                        <Styled.CardSideContainer>
-                            <Styled.CardTitle>Agendamentos amanhã {dayjs().add(1, 'day').format('DD/MM')}</Styled.CardTitle>
-                        </Styled.CardSideContainer>
-                        <Styled.CardSideContainer>
-                            <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
-                        </Styled.CardSideContainer>
-                    </Styled.InfoCard>
-                    <ScheduleList
-                        schedules={schedulesToday}
-                        showUserName
-                        emptyArrayMessage="não há agendamentos para hoje" />
-                    <View style={{ height: 40 }} />
-                </ScrollView>
+                <Styled.InfoCard >
+                    <Styled.CardSideContainer>
+                        <Styled.CardTitle>Agendamentos</Styled.CardTitle>
+                    </Styled.CardSideContainer>
+                    <Styled.CardSideContainer>
+                        <Styled.TextInfo>{schedules.length}</Styled.TextInfo>
+                    </Styled.CardSideContainer>
+                </Styled.InfoCard>
+                <Styled.InfoCard >
+                    <Styled.CardSideContainer>
+                        <Styled.CardTitle>Agendamentos hoje {dayjs().format('DD/MM')}</Styled.CardTitle>
+                    </Styled.CardSideContainer>
+                    <Styled.CardSideContainer>
+                        <Styled.TextInfo>{schedulesToday.length}</Styled.TextInfo>
+                    </Styled.CardSideContainer>
+                </Styled.InfoCard>
+                <Styled.InfoCard >
+                    <Styled.CardSideContainer>
+                        <Styled.CardTitle>Agendamentos amanhã {dayjs().add(1, 'day').format('DD/MM')}</Styled.CardTitle>
+                    </Styled.CardSideContainer>
+                    <Styled.CardSideContainer>
+                        <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
+                    </Styled.CardSideContainer>
+                </Styled.InfoCard>
+                <ScheduleList
+                    schedules={schedulesToday}
+                    showUserName
+                    emptyArrayMessage="não há agendamentos para hoje"
+                    refreshing={refreshing}
+                    onRefresh={() => setRefreshing(true)}
+                />
             </Styled.Content>
         </Styled.Container >
     )

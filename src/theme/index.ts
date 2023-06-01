@@ -16,7 +16,8 @@ export default {
 
     GREEN: "#68D391",
 
-    RED: "#F56565",
+    RED_100: "#E53E3E",
+    RED_200: "#F56565",
   },
   FONT_SIZE: {
     SM: 14,

@@ -1,22 +1,86 @@
 import { ScheduleCard } from '@components/ScheduleCard';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { patchApproveScheduleThunk, patchReproveScheduleThunk } from '@store/modules/schedules/thunk';
+import { FlatList, View } from 'react-native';
 import { ScheduleProps } from 'src/types/common';
 import * as Styled from './styles';
 
 type ScheduleListProps = {
     schedules?: ScheduleProps[] | undefined
-    showUserName?: boolean
     emptyArrayMessage: string
+    showUserName?: boolean
+    onRefresh: () => void
+    refreshing: boolean
 }
 
-export const ScheduleList = ({ schedules, showUserName, emptyArrayMessage }: ScheduleListProps) => {
+export const ScheduleList = ({
+    schedules,
+    showUserName,
+    emptyArrayMessage,
+    onRefresh,
+    refreshing
+}: ScheduleListProps) => {
+
+    const appDispatch = useAppDispatch();
+
+    const handleRightButton = (id: string) => {
+        appDispatch(
+            patchApproveScheduleThunk(
+                id,
+                {
+                    onSuccess: () => {
+                        onRefresh()
+                    },
+                    onError: () => {
+
+                    }
+                }
+            )
+        )
+    }
+
+    const handleLeftButton = (id: string) => {
+        appDispatch(
+            patchReproveScheduleThunk(
+                id, {
+                onSuccess: () => {
+                    onRefresh()
+                },
+                onError: (err) => {
+                    console.log(err)
+                }
+            }
+            )
+        )
+    }
+
+    const renderItem = ({ item }: { item: ScheduleProps }) => {
+        return (
+            <View style={{ flex: 1, paddingBottom: 8 }}>
+                <ScheduleCard
+                    {...item}
+                    key={item.id}
+                    showUserName={showUserName}
+                    rightAction={() => handleRightButton(item.id)}
+                    leftAction={() => handleLeftButton(item.id)}
+                />
+            </View>
+        );
+    };
+
     return (
         <>
             {
                 schedules && schedules.length > 0 ?
                     <Styled.CardArea>
-                        {schedules?.map((schedule) => (
-                            <ScheduleCard {...schedule} key={schedule.id} showUserName={showUserName} />
-                        ))}
+                        <FlatList
+                            data={schedules}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id}
+                            extraData={refreshing}
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
                     </Styled.CardArea>
                     :
                     <Styled.Container>

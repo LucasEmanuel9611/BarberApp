@@ -13,7 +13,7 @@ export const ScheduleStatus = ({ status }: ScheduleStatusProps) => {
         if (status === "APROVADO") {
             return COLORS.GREEN
         } else if (status === "REPROVADO") {
-            return COLORS.RED
+            return COLORS.RED_200
         } else {
             return COLORS.ORANGE_100
         }

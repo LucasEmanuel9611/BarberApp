@@ -1,8 +1,7 @@
 import styled from "styled-components/native";
 
 export const CardArea = styled.View`
-  align-items: center;
-  height: 100%;
+  flex: 1;
   gap: 8px;
 `;
 

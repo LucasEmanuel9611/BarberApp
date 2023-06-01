@@ -25,3 +25,20 @@ export const CardText = styled.Text`
   color: #fff;
   font-size: 16px;
 `;
+export const LeftActionContainer = styled.View`
+  height: 100%;
+  border-radius: 10px;
+  width: 80px;
+  background-color: ${({ theme }) => theme.COLORS.RED_100};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RightActionContainer = styled.View`
+  height: 100%;
+  border-radius: 10px;
+  width: 80px;
+  background-color: ${({ theme }) => theme.COLORS.GREEN};
+  justify-content: center;
+  align-items: center;
+`;

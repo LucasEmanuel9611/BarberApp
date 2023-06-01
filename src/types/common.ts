@@ -1,5 +1,5 @@
 export type ScheduleProps = {
-  id: number;
+  id: string;
   user_id: string;
   username: string;
   status: ScheduleStatusTextProps;

@@ -16,9 +16,25 @@ export const getSchedules = async (): Promise<ScheduleData[]> => {
 };
 
 export const getSchedulesByDay = async (
-  date: SchedulePayload
-): Promise<ScheduleData[]> => {
+  date: string
+): Promise<ScheduleData[]> =>
+  api
+    .get(`/schedules/list/day`, {
+      params: {
+        date: date,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
+
+export const patchApproveSchedule = async (
+  id: string
+): Promise<ScheduleData> => {
   return api
-    .get("/schedules/list/day", { params: date })
+    .patch(`/schedules/approve/${id}`)
     .then((response) => response.data);
 };
+
+export const patchReproveSchedule = async (id: string): Promise<ScheduleData> =>
+  api.patch(`/schedules/reprove/${id}`).then((response) => response.data);

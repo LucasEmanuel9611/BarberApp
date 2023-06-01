@@ -43,7 +43,7 @@ export const CustomInput = styled(TextInput)`
 `;
 
 export const ErrorMessage = styled.Text`
-  color: ${({ theme }) => theme.COLORS.RED};
+  color: ${({ theme }) => theme.COLORS.RED_200};
   width: 100%;
   margin: 0 0 5px 10px;
 `;
