@@ -1,5 +1,6 @@
 
 import { FloatAddButton } from "@components/FloatAddButton";
+import { UserLayout } from "@components/Layout/UserLayout";
 import { ScheduleList } from "@components/ScheduleList";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { useAppSelector } from "@hooks/useAppSelector";
@@ -7,7 +8,6 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { UserNavigatorRoutesProps } from "@routes/user.routes";
 import { getUserSchedulesThunk } from "@store/modules/schedules/thunk";
 import { useCallback, useState } from "react";
-import { ScrollView } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
@@ -29,6 +29,7 @@ export const UserHome = () => {
             appDispatch(getUserSchedulesThunk({
                 onSuccess: (data) => {
                     setSchedules(data)
+                    setRefreshing(false)
                 },
                 onError: (error) => {
                     const errorMessage = error.response.data.message ?? "tente novamente"
@@ -38,30 +39,22 @@ export const UserHome = () => {
                         duration: 4000,
                         animationType: "slide-in",
                     });
+                    setRefreshing(false)
                 }
             }))
-        }, []))
+        }, [refreshing]))
 
     return (
-        <Styled.Container>
-            <ScrollView>
-                <Styled.UserContent>
-                    <Styled.UserNameContainer>
-                        <Styled.WelcomeText>Bem vindo, </Styled.WelcomeText>
-                        <Styled.UserName>{user.name} </Styled.UserName>
-                    </Styled.UserNameContainer>
-                    <Styled.UserAvatar
-                        source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
-                    />
-                </Styled.UserContent>
+        <UserLayout username={user.name}>
+            <Styled.ListContainer>
                 <ScheduleList
                     schedules={schedules}
                     emptyArrayMessage="Você não possui agendamentos"
                     refreshing={refreshing}
                     onRefresh={() => setRefreshing(true)}
                 />
-            </ScrollView>
+            </Styled.ListContainer>
             <FloatAddButton onPress={handleCreateSchedulePage} />
-        </Styled.Container >
+        </UserLayout>
     )
 }

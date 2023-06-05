@@ -1,6 +1,6 @@
 
+import { AdminScheduleList } from "@components/AdminScheduleList";
 import { AdminLayout } from "@components/Layout/AdminLayout";
-import { ScheduleList } from "@components/ScheduleList";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { useAppSelector } from "@hooks/useAppSelector";
 import { useFocusEffect } from "@react-navigation/native";
@@ -37,7 +37,7 @@ export const AdminSchedules = () => {
 
     return (
         <AdminLayout username={user.name}>
-            <ScheduleList
+            <AdminScheduleList
                 schedules={schedules}
                 showUserName
                 emptyArrayMessage="não há agendamentos"

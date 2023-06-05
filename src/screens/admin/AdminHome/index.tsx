@@ -1,14 +1,14 @@
 
+import { AdminScheduleList } from "@components/AdminScheduleList";
 import { AdminLayout } from "@components/Layout/AdminLayout";
-import { ScheduleList } from "@components/ScheduleList";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { useAppSelector } from "@hooks/useAppSelector";
+import dayjs from "@libs/dayjs.config";
 import { useFocusEffect } from "@react-navigation/native";
 import { getSchedulesByDayThunk, getSchedulesThunk } from "@store/modules/schedules/thunk";
 import { useCallback, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
-import dayjs from "../../libs/dayjs.config";
 import * as Styled from "./styles";
 
 export const AdminHome = () => {
@@ -99,7 +99,7 @@ export const AdminHome = () => {
                     <Styled.TextInfo>{schedulesTomorrow.length}</Styled.TextInfo>
                 </Styled.CardSideContainer>
             </Styled.InfoCard>
-            <ScheduleList
+            <AdminScheduleList
                 schedules={schedulesToday}
                 showUserName
                 emptyArrayMessage="não há agendamentos para hoje"

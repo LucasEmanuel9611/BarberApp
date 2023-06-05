@@ -1,45 +1,68 @@
-import { ScheduleCard } from '@components/ScheduleCard';
-import dayjs from '@libs/dayjs.config';
-import { useNavigation } from '@react-navigation/native';
-import { UserNavigatorRoutesProps } from '@routes/user.routes';
+import { AdminScheduleCard } from '@components/AdminScheduleCard';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { patchApproveScheduleThunk, patchReproveScheduleThunk } from '@store/modules/schedules/thunk';
 import { FlatList, View } from 'react-native';
 import { ScheduleProps } from 'src/types/common';
 import * as Styled from './styles';
 
-type ScheduleListProps = {
+type AdminScheduleListProps = {
     schedules?: ScheduleProps[] | undefined
     emptyArrayMessage: string
+    showUserName?: boolean
     onRefresh: () => void
     refreshing: boolean
 }
 
-export type EditScheduleScreenProps = {
-    id: string
-    schedule_date: string
-}
-
-export const ScheduleList = ({
+export const AdminScheduleList = ({
     schedules,
+    showUserName,
     emptyArrayMessage,
     onRefresh,
     refreshing
-}: ScheduleListProps) => {
-    const { navigate } = useNavigation<UserNavigatorRoutesProps>()
+}: AdminScheduleListProps) => {
 
-    const handleEditSchedule = (schedule_id: string, schedule_date: Date) => {
-        const scheduleDateUtc = dayjs(schedule_date).utc().local().format()
-        const params: EditScheduleScreenProps = { id: schedule_id, schedule_date: scheduleDateUtc };
+    const appDispatch = useAppDispatch();
 
-        navigate("editSchedule", params)
+    const handleRightButton = (id: string) => {
+        appDispatch(
+            patchApproveScheduleThunk(
+                id,
+                {
+                    onSuccess: () => {
+                        onRefresh()
+                    },
+                    onError: () => {
+
+                    }
+                }
+            )
+        )
+    }
+
+    const handleLeftButton = (id: string) => {
+        appDispatch(
+            patchReproveScheduleThunk(
+                id, {
+                onSuccess: () => {
+                    onRefresh()
+                },
+                onError: (err) => {
+                    console.log(err)
+                }
+            }
+            )
+        )
     }
 
     const renderItem = ({ item }: { item: ScheduleProps }) => {
         return (
             <View style={{ flex: 1, paddingBottom: 8 }}>
-                <ScheduleCard
+                <AdminScheduleCard
                     {...item}
                     key={item.id}
-                    onPress={() => handleEditSchedule(item.id, item.date)}
+                    showUserName={showUserName}
+                    rightAction={() => handleRightButton(item.id)}
+                    leftAction={() => handleLeftButton(item.id)}
                 />
             </View>
         );

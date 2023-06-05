@@ -4,12 +4,12 @@ import { Feather } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useNavigation } from '@react-navigation/native';
+import { loginThunk } from '@store/modules/auth/thunk';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useToast } from 'react-native-toast-notifications';
 import { AuthNavigatorRoutesProps } from 'src/routes/auth.routes';
 import { z } from 'zod';
-import { loginThunk } from '../../store/modules/auth/thunk';
 import * as Styled from "./styles";
 
 const userSchema = z.object({

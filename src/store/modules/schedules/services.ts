@@ -4,7 +4,11 @@ import { ScheduleData, SchedulePayload } from "./types";
 export const postCreateSchedule = async (
   scheduleData: SchedulePayload
 ): Promise<ScheduleData> => {
-  return api.post("/schedules", scheduleData).then((response) => response.data);
+  console.log(scheduleData);
+  return api.post("/schedules", scheduleData).then((response) => {
+    console.log(response.data);
+    return response.data;
+  });
 };
 
 export const getUserSchedules = async (): Promise<ScheduleData[]> => {
