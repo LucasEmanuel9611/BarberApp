@@ -6,7 +6,7 @@ import dayjs from '@libs/dayjs.config';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { UserNavigatorRoutesProps, UserRoutes } from '@routes/user.routes';
-import { createScheduleThunk } from '@store/modules/schedules/thunk';
+import { createScheduleThunk, deleteScheduleThunk, editScheduleThunk } from '@store/modules/schedules/thunk';
 import { useState } from 'react';
 import { View } from "react-native";
 import { useToast } from 'react-native-toast-notifications';
@@ -20,7 +20,7 @@ export const EditSchedule = () => {
     const [openTimePicker, setOpenTimePicker] = useState(false)
     const navigation = useNavigation<UserNavigatorRoutesProps>();
     const route = useRoute<EditScheduleScreenRouteProp>();
-    const { id, date: schedule_date } = route.params;
+    const { id, schedule_date } = route.params;
     const [date, setDate] = useState(schedule_date);
     const { user } = useAppSelector(state => state.user);
     const appDispatch = useAppDispatch();
@@ -36,14 +36,19 @@ export const EditSchedule = () => {
     }
 
     const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-        const currentDate = selectedDate || date;
-        setOpenDatePicker(false);
-        setOpenTimePicker(false);
-        setDate(dayjs(currentDate).utc().local().format())
+        try {
+            const currentDate = selectedDate || date;
+            setOpenDatePicker(false);
+            setOpenTimePicker(false);
+            const formatedDate = dayjs(currentDate).utc().local().format()
+            setDate(formatedDate)
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const handleCreateSchedule = (date: Date) => {
-        appDispatch(createScheduleThunk({ date }, {
+    const handleEditSchedule = (date: string) => {
+        appDispatch(editScheduleThunk({ id, date }, {
             onSuccess: () => {
                 toast.show("Sucesso ao criar agendamento", {
                     type: "success",
@@ -54,8 +59,30 @@ export const EditSchedule = () => {
                 navigation.navigate("userHome")
             },
             onError: (error) => {
-                console.log(error)
                 const errorMessage = error.response.data?.message ?? "ao criar agendamento tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()}`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+            }
+        }))
+    }
+
+    const handleDeleteSchedule = () => {
+        appDispatch(deleteScheduleThunk(id, {
+            onSuccess: () => {
+                toast.show("Agendamento deletado com sucesso", {
+                    type: "success",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+                navigation.navigate("userHome")
+            },
+            onError: (error) => {
+                const errorMessage = error.response.data?.message ?? "ao deletar agendamento tente novamente"
                 toast.show(`Erro ${errorMessage.toLowerCase()}`, {
                     type: "danger",
                     placement: "top",
@@ -116,10 +143,10 @@ export const EditSchedule = () => {
                 }
             </Styled.FormContainer>
 
-            <Button color={COLORS.ORANGE_100} onPress={() => handleCreateSchedule(date)}>
+            <Button color={COLORS.ORANGE_100} onPress={() => handleEditSchedule(date)}>
                 Editar agendamento
             </Button>
-            <Button color={COLORS.RED_200} onPress={() => handleCreateSchedule(date)}>
+            <Button color={COLORS.RED_200} onPress={() => handleDeleteSchedule()}>
                 Cancelar agendamento
             </Button>
         </Styled.Container>

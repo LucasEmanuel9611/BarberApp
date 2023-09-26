@@ -1,9 +1,9 @@
 import { Entypo } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AdminHome } from '@screens/AdminHome';
-import { AdminProfile } from '@screens/AdminProfile';
-import { AdminSchedules } from '@screens/AdminSchedules';
+import { AdminHome } from '../screens/admin/AdminHome';
+import { AdminProfile } from '../screens/admin/AdminProfile';
+import { AdminSchedules } from '../screens/admin/AdminSchedules';
 
 type AdminRoutes = {
     adminHome: undefined;
