@@ -6,7 +6,7 @@ import { useAppSelector } from "@hooks/useAppSelector";
 import dayjs from "@libs/dayjs.config";
 import { useFocusEffect } from "@react-navigation/native";
 import { getSchedulesByDayThunk, getSchedulesThunk } from "@store/modules/schedules/thunk";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
@@ -20,58 +20,57 @@ export const AdminHome = () => {
     const [schedules, setSchedules] = useState<ScheduleProps[]>([]);
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
-    useFocusEffect(
-        useCallback(() => {
-            const dateNow = dayjs().utc().local().format()
-            const dateTomorrow = dayjs().add(1, "day").utc().local().format()
+    useEffect(() => {
+        const dateNow = dayjs().utc().local().format()
+        const dateTomorrow = dayjs().add(1, "day").utc().local().format()
 
-            appDispatch(getSchedulesByDayThunk(dateNow, {
-                onSuccess: (data) => {
-                    setSchedulesToday(data)
-                },
-                onError: (error) => {
-                    const errorMessage = error.response.data.message ?? "tente novamente"
-                    toast.show(`Erro ${errorMessage.toLowerCase()}`, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 4000,
-                        animationType: "slide-in",
-                    });
-                }
-            }))
+        appDispatch(getSchedulesByDayThunk(dateNow, {
+            onSuccess: (data) => {
+                setSchedulesToday(data)
+            },
+            onError: (error) => {
+                const errorMessage = error.response.data.message ?? "tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()}`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+            }
+        }))
 
-            appDispatch(getSchedulesByDayThunk(dateTomorrow, {
-                onSuccess: (data) => {
-                    setSchedulesTomorrow(data)
-                },
-                onError: (error) => {
-                    const errorMessage = error.response.data.message ?? "tente novamente"
-                    toast.show(`Erro ${errorMessage.toLowerCase()}`, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 4000,
-                        animationType: "slide-in",
-                    });
-                }
-            }))
+        appDispatch(getSchedulesByDayThunk(dateTomorrow, {
+            onSuccess: (data) => {
+                setSchedulesTomorrow(data)
+            },
+            onError: (error) => {
+                const errorMessage = error.response.data.message ?? "tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()}`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+            }
+        }))
 
-            appDispatch(getSchedulesThunk({
-                onSuccess: (data) => {
-                    setSchedules(data)
-                },
-                onError: (error) => {
-                    const errorMessage = error.response.data.message ?? "tente novamente"
-                    toast.show(`Erro ${errorMessage.toLowerCase()}`, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 4000,
-                        animationType: "slide-in",
-                    });
-                }
-            }))
+        appDispatch(getSchedulesThunk({
+            onSuccess: (data) => {
+                setSchedules(data)
+            },
+            onError: (error) => {
+                const errorMessage = error.response.data.message ?? "tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()}`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+            }
+        }))
 
-            setRefreshing(false)
-        }, [refreshing]))
+        setRefreshing(false)
+    }, [refreshing])
 
     return (
         <AdminLayout username={user.name}>
