@@ -103,11 +103,12 @@ export const Login = () => {
                     </Styled.Container>
                 </ScrollView>
             </KeyboardAvoidingView>
-
-            <Styled.CreateAccountButton onPress={() => navigation.navigate('signup')}>
-                <Feather name="log-in" size={20} color="#ff9000" />
-                <Styled.CreateAccountButtonText>Criar uma conta</Styled.CreateAccountButtonText>
-            </Styled.CreateAccountButton>
+            <Styled.ButtonContainer>
+                <Styled.CreateAccountButton activeOpacity={0.7} onPress={() => navigation.navigate('signup')} >
+                    <Feather name="log-in" size={20} color="#ff9000" />
+                    <Styled.CreateAccountButtonText>Criar uma conta</Styled.CreateAccountButtonText>
+                </Styled.CreateAccountButton>
+            </Styled.ButtonContainer>
         </>
     )
 }

@@ -42,3 +42,8 @@ export const CreateAccountButtonText = styled.Text`
   font-size: 18px;
   margin-left: 16px;
 `;
+
+export const ButtonContainer = styled.View`
+  padding-bottom: 20px;
+  background-color: ${({ theme }) => theme.COLORS.GRAY_400};
+`
