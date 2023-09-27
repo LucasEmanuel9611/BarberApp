@@ -1,4 +1,3 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
 export const UserContent = styled.View`
@@ -7,7 +6,7 @@ export const UserContent = styled.View`
   align-items: center;
   padding: 20px;
   height: 80px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 export const UserNameContainer = styled.View`
@@ -33,14 +32,15 @@ export const UserAvatar = styled.Image`
   border-radius: 9999px;
 `;
 
-export const Container = styled(SafeAreaView)`
-  flex: 1;
+export const Container = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.COLORS.ORANGE_100};
+  flex: 1;
 `;
 
 export const Content = styled.View`
   background-color: ${({ theme }) => theme.COLORS.GRAY_500};
   flex: 1;
+  height: 100%;
   border-radius: 30px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
