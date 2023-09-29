@@ -14,7 +14,7 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ToastProvider offset={80} >
           <ThemeProvider theme={theme}>
-            <StatusBar style="dark" />
+            <StatusBar style="light" />
             <Routes />
           </ThemeProvider>
         </ToastProvider>

@@ -46,24 +46,21 @@ export const ScheduleList = ({
     };
 
     return (
-        <>
-            {
-                schedules && schedules.length > 0 ?
-                    <Styled.CardArea>
-                        <FlatList
-                            data={schedules}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                            extraData={refreshing}
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    </Styled.CardArea>
-                    :
+        <Styled.CardArea>
+            <FlatList
+                data={schedules}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                extraData={refreshing}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                ListEmptyComponent={
                     <Styled.Container>
                         <Styled.TreatmentText> {emptyArrayMessage} </Styled.TreatmentText>
                     </Styled.Container>
-            }
-        </>
+                }
+            />
+        </Styled.CardArea >
+
     )
 }

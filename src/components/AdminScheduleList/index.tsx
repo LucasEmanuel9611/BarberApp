@@ -1,9 +1,9 @@
-import { AdminScheduleCard } from '@components/AdminScheduleCard';
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { patchApproveScheduleThunk, patchReproveScheduleThunk } from '@store/modules/schedules/thunk';
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { ScheduleProps } from 'src/types/common';
 import * as Styled from './styles';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { patchApproveScheduleThunk, patchReproveScheduleThunk } from '@store/modules/schedules/thunk';
+import { AdminScheduleCard } from '@components/AdminScheduleCard';
 
 type AdminScheduleListProps = {
     schedules?: ScheduleProps[] | undefined
@@ -69,24 +69,27 @@ export const AdminScheduleList = ({
     };
 
     return (
-        <>
-            {
-                schedules && schedules.length > 0 ?
-                    <Styled.CardArea>
-                        <FlatList
-                            data={schedules}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                            extraData={refreshing}
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    </Styled.CardArea>
-                    :
+        <Styled.CardArea>
+            <FlatList
+                data={schedules}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                extraData={refreshing}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        tintColor={'#fff'}
+                    />
+                }
+                ListEmptyComponent={
                     <Styled.Container>
                         <Styled.TreatmentText> {emptyArrayMessage} </Styled.TreatmentText>
                     </Styled.Container>
-            }
-        </>
+                }
+            />
+        </Styled.CardArea >
+
     )
 }

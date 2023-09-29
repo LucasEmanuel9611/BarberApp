@@ -7,7 +7,7 @@ import { useAppSelector } from "@hooks/useAppSelector";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { UserNavigatorRoutesProps } from "@routes/user.routes";
 import { getUserSchedulesThunk } from "@store/modules/schedules/thunk";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
@@ -24,25 +24,24 @@ export const UserHome = () => {
         navigation.navigate("createSchedule")
     }
 
-    useFocusEffect(
-        useCallback(() => {
-            appDispatch(getUserSchedulesThunk({
-                onSuccess: (data) => {
-                    setSchedules(data)
-                    setRefreshing(false)
-                },
-                onError: (error) => {
-                    const errorMessage = error.response.data.message ?? "tente novamente"
-                    toast.show(`Erro ${errorMessage.toLowerCase()}`, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 4000,
-                        animationType: "slide-in",
-                    });
-                    setRefreshing(false)
-                }
-            }))
-        }, [refreshing]))
+    useEffect(() => {
+        appDispatch(getUserSchedulesThunk({
+            onSuccess: (data) => {
+                setSchedules(data)
+                setRefreshing(false)
+            },
+            onError: (error) => {
+                const errorMessage = error.response.data.message ?? "tente novamente"
+                toast.show(`Erro ${errorMessage.toLowerCase()}`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                });
+                setRefreshing(false)
+            }
+        }))
+    }, [refreshing])
 
     return (
         <UserLayout username={user.name}>

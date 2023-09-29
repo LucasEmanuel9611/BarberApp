@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { ScheduleProps } from "src/types/common";
 import * as Styled from "./styles";
+import { StatusBar } from "expo-status-bar";
 
 export const AdminHome = () => {
     const { user } = useAppSelector(state => state.user);
@@ -74,6 +75,7 @@ export const AdminHome = () => {
 
     return (
         <AdminLayout username={user.name}>
+            <StatusBar style='dark' />
             <Styled.InfoCard >
                 <Styled.CardSideContainer>
                     <Styled.CardTitle>Agendamentos</Styled.CardTitle>
@@ -101,7 +103,7 @@ export const AdminHome = () => {
             <AdminScheduleList
                 schedules={schedulesToday}
                 showUserName
-                emptyArrayMessage="não há agendamentos para hoje"
+                emptyArrayMessage="Não há agendamentos para hoje"
                 refreshing={refreshing}
                 onRefresh={() => setRefreshing(true)}
             />
