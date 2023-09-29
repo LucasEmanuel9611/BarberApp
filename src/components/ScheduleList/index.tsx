@@ -2,7 +2,7 @@ import { ScheduleCard } from '@components/ScheduleCard';
 import dayjs from '@libs/dayjs.config';
 import { useNavigation } from '@react-navigation/native';
 import { UserNavigatorRoutesProps } from '@routes/user.routes';
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { ScheduleProps } from 'src/types/common';
 import * as Styled from './styles';
 
@@ -52,8 +52,13 @@ export const ScheduleList = ({
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={refreshing}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={onRefresh}
+                        refreshing={refreshing}
+                        tintColor={'#fff'}
+                    />
+                }
                 ListEmptyComponent={
                     <Styled.Container>
                         <Styled.TreatmentText> {emptyArrayMessage} </Styled.TreatmentText>

@@ -75,10 +75,9 @@ export const AdminScheduleList = ({
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={refreshing}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
                 refreshControl={
                     <RefreshControl
+                        onRefresh={onRefresh}
                         refreshing={refreshing}
                         tintColor={'#fff'}
                     />

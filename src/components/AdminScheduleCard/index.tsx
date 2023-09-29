@@ -16,7 +16,7 @@ export type CardProps = {
 type AdminScheduleCardProps = ScheduleProps & CardProps
 
 export const AdminScheduleCard = ({
-    created_at,
+    date,
     status,
     username,
     showUserName,
@@ -62,8 +62,8 @@ export const AdminScheduleCard = ({
                     </Styled.CardText>}
                 </Styled.StatusSideContainer>
                 <Styled.DateContainer>
-                    <Styled.CardText>{dayjs(created_at).format("DD/MM/YYYY")} </Styled.CardText>
-                    <Styled.CardText>{dayjs(created_at).format("HH:mm")} </Styled.CardText>
+                    <Styled.CardText>{dayjs(date).format("DD/MM/YYYY")} </Styled.CardText>
+                    <Styled.CardText>{dayjs(date).format("HH:mm")} </Styled.CardText>
                 </Styled.DateContainer>
             </Styled.CardContainer>
         </Swipeable>
